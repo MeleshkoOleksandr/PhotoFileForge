@@ -1,0 +1,42 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Акцентные цвета (общие для обеих тем) -->
+    <Color x:Key="MacAccentColor">#9CCC65</Color>
+    <Color x:Key="MacAccentHoverColor">#AED581</Color>
+    <SolidColorBrush x:Key="MacAccentBrush" Color="{StaticResource MacAccentColor}"/>
+    <SolidColorBrush x:Key="MacAccentHoverBrush" Color="{StaticResource MacAccentHoverColor}"/>
+    <SolidColorBrush x:Key="MacAccentTransparentBrush" Color="#209CCC65"/> <!-- Для выделения (прозрачный) -->
+
+    <ResourceDictionary.ThemeDictionaries>
+        
+        <!-- СВЕТЛАЯ ТЕМА (Light Mode) -->
+        <ResourceDictionary x:Key="Light">
+            <SolidColorBrush x:Key="MacWindowBackgroundBrush">#ECECEC</SolidColorBrush>
+            <SolidColorBrush x:Key="MacSurfaceBrush">#FFFFFF</SolidColorBrush>
+            <SolidColorBrush x:Key="MacSubsurfaceBrush">#F5F5F7</SolidColorBrush>
+            <SolidColorBrush x:Key="MacBorderBrush">#D1D1D6</SolidColorBrush>
+            <SolidColorBrush x:Key="MacBorderLightBrush">#E5E5EA</SolidColorBrush>
+            
+            <SolidColorBrush x:Key="MacTextBrush">#000000</SolidColorBrush>
+            <SolidColorBrush x:Key="MacTextMutedBrush">#8E8E93</SolidColorBrush>
+            
+            <SolidColorBrush x:Key="MacHoverBrush">#0A000000</SolidColorBrush>
+        </ResourceDictionary>
+
+        <!-- ТЕМНАЯ ТЕМА (Dark Mode) -->
+        <ResourceDictionary x:Key="Dark">
+            <SolidColorBrush x:Key="MacWindowBackgroundBrush">#1E1E1E</SolidColorBrush>
+            <SolidColorBrush x:Key="MacSurfaceBrush">#252525</SolidColorBrush>
+            <SolidColorBrush x:Key="MacSubsurfaceBrush">#2C2C2E</SolidColorBrush>
+            <SolidColorBrush x:Key="MacBorderBrush">#3A3A3C</SolidColorBrush>
+            <SolidColorBrush x:Key="MacBorderLightBrush">#48484A</SolidColorBrush>
+            
+            <SolidColorBrush x:Key="MacTextBrush">#FFFFFF</SolidColorBrush>
+            <SolidColorBrush x:Key="MacTextMutedBrush">#98989D</SolidColorBrush>
+
+            <SolidColorBrush x:Key="MacHoverBrush">#1AFFFFFF</SolidColorBrush>
+        </ResourceDictionary>
+        
+    </ResourceDictionary.ThemeDictionaries>
+</ResourceDictionary>
