@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\PhotoFileForge.Core\PhotoFileForge.Core.csproj" />
+    <ProjectReference Include="..\PhotoFileForge.Platform.macOS\PhotoFileForge.Platform.macOS.csproj" />
+  </ItemGroup>
+
+</Project>

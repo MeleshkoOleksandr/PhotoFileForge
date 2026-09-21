@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\PhotoFileForge.Core\PhotoFileForge.Core.csproj" />
+  </ItemGroup>
+
+</Project>

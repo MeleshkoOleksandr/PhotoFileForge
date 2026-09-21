@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/PhotoFileForge.App/PhotoFileForge.App.csproj" />
+    <Project Path="src/PhotoFileForge.Core/PhotoFileForge.Core.csproj" />
+    <Project Path="src/PhotoFileForge.Infrastructure/PhotoFileForge.Infrastructure.csproj" />
+    <Project Path="src/PhotoFileForge.Platform.macOS/PhotoFileForge.Platform.macOS.csproj" />
+  </Folder>
+</Solution>

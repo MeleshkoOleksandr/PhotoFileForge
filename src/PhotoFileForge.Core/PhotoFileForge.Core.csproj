@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Pure domain kernel: no external NuGet dependencies -->
+
+</Project>
