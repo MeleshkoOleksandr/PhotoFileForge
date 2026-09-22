@@ -14,10 +14,12 @@
         Foreground="{DynamicResource MacTextBrush}"
         FontFamily="System UI">
 
-    <Grid RowDefinitions="36, 40, *, 32, 32">
+
+
+    <Grid RowDefinitions="36, 40, *, 32, Auto">
         
         <!-- 1. TITLEBAR (Drag Area) -->
-        <!-- Пустая прозрачная область для того, чтобы окно можно было перетаскивать, и системные "светофоры" macOS не перекрывали UI -->
+        <!-- Empty transparent area to allow window dragging without macOS traffic lights overlapping the UI -->
         <Border Grid.Row="0" Background="Transparent" IsHitTestVisible="False" />
         <TextBlock Grid.Row="0" Text="Salamander Commander — Dual Pane Pro" 
                    HorizontalAlignment="Center" VerticalAlignment="Center" 
@@ -210,17 +212,19 @@
         </Border>
 
         <!-- 5. COMMANDER BAR (F-KEYS) -->
-        <Border Grid.Row="4" Background="{DynamicResource MacWindowBackgroundBrush}" BorderBrush="{DynamicResource MacBorderBrush}" BorderThickness="0,1,0,0" Padding="4">
-            <UniformGrid Columns="8">
+        <Border Grid.Row="4" Background="{DynamicResource MacWindowBackgroundBrush}" BorderBrush="{DynamicResource MacBorderBrush}" BorderThickness="0,1,0,0" Padding="2,2">
+            <UniformGrid Columns="10">
                 <!-- F-Key Buttons mock -->
-                <Button Classes="FKey" Content="F3 View" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="2" Background="{DynamicResource MacSurfaceBrush}"/>
-                <Button Classes="FKey" Content="F4 Edit" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="2" Background="{DynamicResource MacSurfaceBrush}"/>
-                <Button Classes="FKey" Content="F5 Copy" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="2" Background="{DynamicResource MacSurfaceBrush}"/>
-                <Button Classes="FKey" Content="F6 Move" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="2" Background="{DynamicResource MacSurfaceBrush}"/>
-                <Button Classes="FKey" Content="F7 MkDir" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="2" Background="{DynamicResource MacSurfaceBrush}"/>
-                <Button Classes="FKey" Content="F8 Delete" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="2" Background="{DynamicResource MacSurfaceBrush}"/>
-                <Button Classes="FKey" Content="F9 Search" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="2" Background="{DynamicResource MacSurfaceBrush}"/>
-                <Button Classes="FKey" Content="⌘Q Quit" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="2" Background="{DynamicResource MacSurfaceBrush}"/>
+                <Button Classes="FKey" Content="⌃Spc Select"/>
+                <Button Classes="FKey" Content="F2 Rename"/>
+                <Button Classes="FKey" Content="F3 View"/>
+                <Button Classes="FKey" Content="F4 Edit"/>
+                <Button Classes="FKey" Content="F5 Copy"/>
+                <Button Classes="FKey" Content="F6 Move"/>
+                <Button Classes="FKey" Content="F7 MkDir"/>
+                <Button Classes="FKey" Content="F8 Delete"/>
+                <Button Classes="FKey" Content="F9 Search"/>
+                <Button Classes="FKey" Content="⌘Q Quit"/>
             </UniformGrid>
         </Border>
 

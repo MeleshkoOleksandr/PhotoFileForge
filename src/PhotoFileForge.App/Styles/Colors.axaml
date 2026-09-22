@@ -1,16 +1,16 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!-- Акцентные цвета (общие для обеих тем) -->
+    <!-- Accent colors (shared across themes) -->
     <Color x:Key="MacAccentColor">#9CCC65</Color>
     <Color x:Key="MacAccentHoverColor">#AED581</Color>
     <SolidColorBrush x:Key="MacAccentBrush" Color="{StaticResource MacAccentColor}"/>
     <SolidColorBrush x:Key="MacAccentHoverBrush" Color="{StaticResource MacAccentHoverColor}"/>
-    <SolidColorBrush x:Key="MacAccentTransparentBrush" Color="#209CCC65"/> <!-- Для выделения (прозрачный) -->
+    <SolidColorBrush x:Key="MacAccentTransparentBrush" Color="#209CCC65"/> <!-- For selection highlighting (transparent) -->
 
     <ResourceDictionary.ThemeDictionaries>
         
-        <!-- СВЕТЛАЯ ТЕМА (Light Mode) -->
+        <!-- LIGHT THEME -->
         <ResourceDictionary x:Key="Light">
             <SolidColorBrush x:Key="MacWindowBackgroundBrush">#ECECEC</SolidColorBrush>
             <SolidColorBrush x:Key="MacSurfaceBrush">#FFFFFF</SolidColorBrush>
@@ -24,7 +24,7 @@
             <SolidColorBrush x:Key="MacHoverBrush">#0A000000</SolidColorBrush>
         </ResourceDictionary>
 
-        <!-- ТЕМНАЯ ТЕМА (Dark Mode) -->
+        <!-- DARK THEME -->
         <ResourceDictionary x:Key="Dark">
             <SolidColorBrush x:Key="MacWindowBackgroundBrush">#1E1E1E</SolidColorBrush>
             <SolidColorBrush x:Key="MacSurfaceBrush">#252525</SolidColorBrush>

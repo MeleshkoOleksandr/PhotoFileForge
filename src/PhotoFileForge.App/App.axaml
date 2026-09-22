@@ -20,5 +20,6 @@
 
     <Application.Styles>
         <FluentTheme />
+        <StyleInclude Source="avares://PhotoFileForge.App/Styles/ButtonStyles.axaml" />
     </Application.Styles>
 </Application>
