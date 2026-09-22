@@ -6,6 +6,7 @@
         mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="800"
         x:Class="PhotoFileForge.App.Views.MainWindow"
         x:DataType="vm:MainViewModel"
+        
         Title="PhotoFileForge"
         Width="1200" Height="800"
         ExtendClientAreaToDecorationsHint="True"
@@ -13,218 +14,326 @@
         Background="{DynamicResource MacWindowBackgroundBrush}"
         Foreground="{DynamicResource MacTextBrush}"
         FontFamily="System UI">
+    
+    <Grid RowDefinitions="36, 40, *, 32, Auto, Auto">
 
-
-
-    <Grid RowDefinitions="36, 40, *, 32, Auto">
-        
         <!-- 1. TITLEBAR (Drag Area) -->
         <!-- Empty transparent area to allow window dragging without macOS traffic lights overlapping the UI -->
         <Border Grid.Row="0" Background="Transparent" IsHitTestVisible="False" />
-        <TextBlock Grid.Row="0" Text="Salamander Commander — Dual Pane Pro" 
-                   HorizontalAlignment="Center" VerticalAlignment="Center" 
-                   FontSize="{DynamicResource FontSizeSmall}" FontWeight="SemiBold" 
-                   IsHitTestVisible="False"/>
+        <TextBlock Grid.Row="0" Text="PhotoFileForge — File Manager"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                   FontSize="{DynamicResource FontSizeSmall}" FontWeight="SemiBold"
+                   IsHitTestVisible="False" />
 
         <!-- 2. TOOLBAR -->
-        <Border Grid.Row="1" Background="{DynamicResource MacSurfaceBrush}" BorderBrush="{DynamicResource MacBorderBrush}" BorderThickness="0,0,0,1" Padding="12,0">
-            <DockPanel VerticalAlignment="Center">
-                
-                <!-- View Mode Segmented Control -->
-                <Border DockPanel.Dock="Left" Background="{DynamicResource MacWindowBackgroundBrush}" CornerRadius="{DynamicResource RadiusMedium}" BorderBrush="{DynamicResource MacBorderBrush}" BorderThickness="1" Padding="2">
-                    <StackPanel Orientation="Horizontal">
-                        <Border Background="{DynamicResource MacSubsurfaceBrush}" CornerRadius="4" Padding="8,4" BorderBrush="{DynamicResource MacAccentTransparentBrush}" BorderThickness="1">
-                            <StackPanel Orientation="Horizontal" Spacing="4">
-                                <Ellipse Width="8" Height="8" Fill="{DynamicResource MacAccentBrush}"/>
-                                <TextBlock Text="File Manager" FontSize="{DynamicResource FontSizeSmall}" FontWeight="Medium"/>
-                            </StackPanel>
-                        </Border>
-                        <Border Padding="8,4" Background="Transparent">
-                            <TextBlock Text="Photo Viewer" Foreground="{DynamicResource MacTextMutedBrush}" FontSize="{DynamicResource FontSizeSmall}"/>
-                        </Border>
-                        <Border Padding="8,4" Background="Transparent">
-                            <TextBlock Text="Batch Editor" Foreground="{DynamicResource MacTextMutedBrush}" FontSize="{DynamicResource FontSizeSmall}"/>
-                        </Border>
-                    </StackPanel>
-                </Border>
+        <Border Grid.Row="1" Background="{DynamicResource MacSurfaceBrush}"
+                BorderBrush="{DynamicResource MacBorderBrush}" BorderThickness="0,0,0,1" Padding="12,0">
+           
+             <Grid ColumnDefinitions="*,Auto,*" Margin="12,0">
 
-                <!-- Search & Actions -->
-                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Spacing="8">
-                    <TextBox Width="200" PlaceholderText="Filter files (*.jpg, >=10MB)..." CornerRadius="{DynamicResource RadiusSmall}" 
-                             Background="{DynamicResource MacWindowBackgroundBrush}" BorderBrush="{DynamicResource MacBorderBrush}"
-                             FontSize="{DynamicResource FontSizeSmall}" Padding="8,4"/>
-                    
-                    <Button Content="Inspector" Background="{DynamicResource MacAccentTransparentBrush}" Foreground="{DynamicResource MacAccentBrush}" 
-                            CornerRadius="{DynamicResource RadiusSmall}" FontSize="{DynamicResource FontSizeSmall}"/>
+        <!-- Left: app glyph + mode switcher -->
+        <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="14" VerticalAlignment="Center">
+          <TextBlock Text="Photo Vault" Classes="h1" VerticalAlignment="Center" />
+
+          <Border Classes="segmented">
+            <StackPanel Orientation="Horizontal" Spacing="2">
+              <ToggleButton Classes="segment" Content="File Manager" IsChecked="True" />
+              <ToggleButton Classes="segment" Content="Photo Viewer" />
+              <ToggleButton Classes="segment" Content="Batch Editor" />
+              <ToggleButton Classes="segment" IsEnabled="False" ToolTip.Tip="Coming later">
+                <StackPanel Orientation="Horizontal" Spacing="5">
+                  <TextBlock Text="Timeline" />
+                  <Border Background="{DynamicResource SidebarChipBackgroundBrush}" CornerRadius="3" Padding="4,0">
+                    <TextBlock Text="SOON" FontSize="9" Foreground="{DynamicResource TextTertiaryBrush}" FontWeight="Bold" />
+                  </Border>
                 </StackPanel>
+              </ToggleButton>
+            </StackPanel>
+          </Border>
+        </StackPanel>
 
-                <!-- Filler -->
-                <Panel />
-            </DockPanel>
+        <!-- Center: reserved (kept empty — panes carry the path instead) -->
+        <StackPanel Grid.Column="1" />
+
+        <!-- Right: utilities -->
+        <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="6"
+                    HorizontalAlignment="Right" VerticalAlignment="Center">
+          <TextBox Classes="search" PlaceholderText="Filter files (e.g. *.cr3, &gt;=10MB)…" />
+     
+          <Button x:Name="SidebarToggleButton" Classes="toolbarIcon active" Click="OnToggleSidebar" ToolTip.Tip="Toggle Preview &amp; Metadata sidebar">
+            <TextBlock Text="&#9636;" FontSize="14" HorizontalAlignment="Center" />
+          </Button>
+          <Button x:Name="ThemeToggleButton" Classes="toolbarIcon" Click="OnToggleTheme" ToolTip.Tip="Toggle Light / Dark">
+            <TextBlock x:Name="ThemeToggleGlyph" Text="&#9789;" FontSize="14" HorizontalAlignment="Center" />
+          </Button>
+          <Button Classes="toolbarIcon" ToolTip.Tip="Preferences">
+            <TextBlock Text="&#9881;" FontSize="14" HorizontalAlignment="Center" />
+          </Button>
+        </StackPanel>
+      </Grid>
+            
+            
         </Border>
 
         <!-- 3. MAIN WORKSPACE (Dual Pane + Inspector) -->
         <Grid Grid.Row="2" ColumnDefinitions="*, 1, *, 1, 300">
-            
+
             <!-- LEFT PANE -->
             <Grid Grid.Column="0" RowDefinitions="Auto, Auto, *">
-                <Border Grid.Row="0" Height="2" Background="{DynamicResource MacAccentBrush}"/> <!-- Active Pane Indicator -->
-                
+                <Border Grid.Row="0" Height="2" Background="{DynamicResource MacAccentBrush}" />
+                <!-- Active Pane Indicator -->
+
                 <!-- Tab/Path Bar -->
-                <Border Grid.Row="1" Background="{DynamicResource MacSubsurfaceBrush}" BorderBrush="{DynamicResource MacBorderBrush}" BorderThickness="0,0,0,1" Padding="8,4">
-                    <TextBlock Text="📁 /Volumes/Media/Photo/2026/33_Rigi_Trip" FontSize="{DynamicResource FontSizeSmall}" FontWeight="SemiBold"/>
+                <Border Grid.Row="1" Background="{DynamicResource MacSubsurfaceBrush}"
+                        BorderBrush="{DynamicResource MacBorderBrush}" BorderThickness="0,0,0,1" Padding="8,4">
+                    <TextBlock Text="📁 /Volumes/Media/Photo/2026/33_Rigi_Trip"
+                               FontSize="{DynamicResource FontSizeSmall}" FontWeight="SemiBold" />
                 </Border>
-                
+
                 <!-- File List (Placeholder) -->
-                <ListBox Grid.Row="2" Background="{DynamicResource MacSurfaceBrush}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListBox Grid.Row="2" Background="{DynamicResource MacSurfaceBrush}"
+                         ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                     <ListBox.Styles>
                         <Style Selector="ListBoxItem">
-                            <Setter Property="Padding" Value="8,4"/>
-                            <Setter Property="FontSize" Value="{DynamicResource FontSizeBody}"/>
+                            <Setter Property="Padding" Value="8,4" />
+                            <Setter Property="FontSize" Value="{DynamicResource FontSizeBody}" />
                         </Style>
                     </ListBox.Styles>
                     <!-- Headers (Mockup) -->
                     <Grid ColumnDefinitions="*, 80, 80, 120" Margin="8,4,8,8">
-                        <TextBlock Grid.Column="0" Text="NAME" Foreground="{DynamicResource MacTextMutedBrush}" FontSize="{DynamicResource FontSizeTiny}" FontWeight="Bold"/>
-                        <TextBlock Grid.Column="1" Text="EXT" Foreground="{DynamicResource MacTextMutedBrush}" FontSize="{DynamicResource FontSizeTiny}" FontWeight="Bold" TextAlignment="Right"/>
-                        <TextBlock Grid.Column="2" Text="SIZE" Foreground="{DynamicResource MacTextMutedBrush}" FontSize="{DynamicResource FontSizeTiny}" FontWeight="Bold" TextAlignment="Right"/>
-                        <TextBlock Grid.Column="3" Text="MODIFIED" Foreground="{DynamicResource MacTextMutedBrush}" FontSize="{DynamicResource FontSizeTiny}" FontWeight="Bold" TextAlignment="Right"/>
+                        <TextBlock Grid.Column="0" Text="NAME" Foreground="{DynamicResource MacTextMutedBrush}"
+                                   FontSize="{DynamicResource FontSizeTiny}" FontWeight="Bold" />
+                        <TextBlock Grid.Column="1" Text="EXT" Foreground="{DynamicResource MacTextMutedBrush}"
+                                   FontSize="{DynamicResource FontSizeTiny}" FontWeight="Bold" TextAlignment="Right" />
+                        <TextBlock Grid.Column="2" Text="SIZE" Foreground="{DynamicResource MacTextMutedBrush}"
+                                   FontSize="{DynamicResource FontSizeTiny}" FontWeight="Bold" TextAlignment="Right" />
+                        <TextBlock Grid.Column="3" Text="MODIFIED" Foreground="{DynamicResource MacTextMutedBrush}"
+                                   FontSize="{DynamicResource FontSizeTiny}" FontWeight="Bold" TextAlignment="Right" />
                     </Grid>
-                    
+
                     <!-- Items -->
                     <Grid ColumnDefinitions="*, 80, 80, 120">
-                        <TextBlock Grid.Column="0" Text="📁 _Selects_Final" FontWeight="SemiBold"/>
-                        <TextBlock Grid.Column="1" Text="Folder" TextAlignment="Right" Foreground="{DynamicResource MacTextMutedBrush}"/>
-                        <TextBlock Grid.Column="2" Text="42 items" TextAlignment="Right" Foreground="{DynamicResource MacTextMutedBrush}"/>
-                        <TextBlock Grid.Column="3" Text="Today 14:10" TextAlignment="Right" Foreground="{DynamicResource MacTextMutedBrush}"/>
+                        <TextBlock Grid.Column="0" Text="📁 _Selects_Final" FontWeight="SemiBold" />
+                        <TextBlock Grid.Column="1" Text="Folder" TextAlignment="Right"
+                                   Foreground="{DynamicResource MacTextMutedBrush}" />
+                        <TextBlock Grid.Column="2" Text="42 items" TextAlignment="Right"
+                                   Foreground="{DynamicResource MacTextMutedBrush}" />
+                        <TextBlock Grid.Column="3" Text="Today 14:10" TextAlignment="Right"
+                                   Foreground="{DynamicResource MacTextMutedBrush}" />
                     </Grid>
-                    
+
                     <!-- Selected Item Mockup -->
-                    <Grid ColumnDefinitions="*, 80, 80, 120" Background="{DynamicResource MacAccentTransparentBrush}">
-                        <TextBlock Grid.Column="0" Text="🖼️ IMG_114801.JPG" FontWeight="SemiBold" Foreground="{DynamicResource MacAccentBrush}"/>
-                        <TextBlock Grid.Column="1" Text="JPG" TextAlignment="Right" Foreground="{DynamicResource MacAccentBrush}" FontWeight="Bold"/>
-                        <TextBlock Grid.Column="2" Text="8.4 MB" TextAlignment="Right" Foreground="{DynamicResource MacAccentBrush}"/>
-                        <TextBlock Grid.Column="3" Text="Today 11:30" TextAlignment="Right" Foreground="{DynamicResource MacTextBrush}"/>
+                    <Grid ColumnDefinitions="*, 80, 80, 120" Background="{DynamicResource AccentTransparentBrush}">
+                        <TextBlock Grid.Column="0" Text="🖼️ IMG_114801.JPG" FontWeight="SemiBold"
+                                   Foreground="{DynamicResource MacAccentBrush}" />
+                        <TextBlock Grid.Column="1" Text="JPG" TextAlignment="Right"
+                                   Foreground="{DynamicResource MacAccentBrush}" FontWeight="Bold" />
+                        <TextBlock Grid.Column="2" Text="8.4 MB" TextAlignment="Right"
+                                   Foreground="{DynamicResource MacAccentBrush}" />
+                        <TextBlock Grid.Column="3" Text="Today 11:30" TextAlignment="Right"
+                                   Foreground="{DynamicResource MacTextBrush}" />
                     </Grid>
-                    
+
                     <Grid ColumnDefinitions="*, 80, 80, 120">
-                        <TextBlock Grid.Column="0" Text="📄 DJI_0482_Aerial.DNG"/>
-                        <TextBlock Grid.Column="1" Text="DNG" TextAlignment="Right" Foreground="#9C27B0"/>
-                        <TextBlock Grid.Column="2" Text="102.4 MB" TextAlignment="Right" Foreground="{DynamicResource MacTextMutedBrush}"/>
-                        <TextBlock Grid.Column="3" Text="2026-06-13" TextAlignment="Right" Foreground="{DynamicResource MacTextMutedBrush}"/>
+                        <TextBlock Grid.Column="0" Text="📄 DJI_0482_Aerial.DNG" />
+                        <TextBlock Grid.Column="1" Text="DNG" TextAlignment="Right" Foreground="#9C27B0" />
+                        <TextBlock Grid.Column="2" Text="102.4 MB" TextAlignment="Right"
+                                   Foreground="{DynamicResource MacTextMutedBrush}" />
+                        <TextBlock Grid.Column="3" Text="2026-06-13" TextAlignment="Right"
+                                   Foreground="{DynamicResource MacTextMutedBrush}" />
                     </Grid>
-                    
+
                     <Grid ColumnDefinitions="*, 80, 80, 120">
-                        <TextBlock Grid.Column="0" Text="🎞️ CLIP_0042.MOV"/>
-                        <TextBlock Grid.Column="1" Text="MOV" TextAlignment="Right" Foreground="#2196F3"/>
-                        <TextBlock Grid.Column="2" Text="2.1 GB" TextAlignment="Right" Foreground="{DynamicResource MacTextMutedBrush}"/>
-                        <TextBlock Grid.Column="3" Text="2026-06-14" TextAlignment="Right" Foreground="{DynamicResource MacTextMutedBrush}"/>
+                        <TextBlock Grid.Column="0" Text="🎞️ CLIP_0042.MOV" />
+                        <TextBlock Grid.Column="1" Text="MOV" TextAlignment="Right" Foreground="#2196F3" />
+                        <TextBlock Grid.Column="2" Text="2.1 GB" TextAlignment="Right"
+                                   Foreground="{DynamicResource MacTextMutedBrush}" />
+                        <TextBlock Grid.Column="3" Text="2026-06-14" TextAlignment="Right"
+                                   Foreground="{DynamicResource MacTextMutedBrush}" />
                     </Grid>
                 </ListBox>
             </Grid>
 
             <!-- Splitter 1 -->
-            <GridSplitter Grid.Column="1" Background="{DynamicResource MacBorderBrush}" ResizeDirection="Columns"/>
+            <GridSplitter Grid.Column="1" Background="{DynamicResource MacBorderBrush}" ResizeDirection="Columns" />
 
             <!-- RIGHT PANE (Inactive Look) -->
             <Grid Grid.Column="2" RowDefinitions="Auto, Auto, *">
-                <Border Grid.Row="0" Height="2" Background="{DynamicResource MacBorderBrush}"/>
-                
-                <Border Grid.Row="1" Background="{DynamicResource MacWindowBackgroundBrush}" BorderBrush="{DynamicResource MacBorderBrush}" BorderThickness="0,0,0,1" Padding="8,4">
-                    <TextBlock Text="📁 /Users/alex/Code/Projects/Export" FontSize="{DynamicResource FontSizeSmall}" Foreground="{DynamicResource MacTextMutedBrush}"/>
+                <Border Grid.Row="0" Height="2" Background="{DynamicResource MacBorderBrush}" />
+
+                <Border Grid.Row="1" Background="{DynamicResource MacWindowBackgroundBrush}"
+                        BorderBrush="{DynamicResource MacBorderBrush}" BorderThickness="0,0,0,1" Padding="8,4">
+                    <TextBlock Text="📁 /Users/alex/Code/Projects/Export" FontSize="{DynamicResource FontSizeSmall}"
+                               Foreground="{DynamicResource MacTextMutedBrush}" />
                 </Border>
-                
+
                 <ListBox Grid.Row="2" Background="{DynamicResource MacWindowBackgroundBrush}" Opacity="0.7">
                     <ListBox.Styles>
                         <Style Selector="ListBoxItem">
-                            <Setter Property="Padding" Value="8,4"/>
-                            <Setter Property="FontSize" Value="{DynamicResource FontSizeBody}"/>
+                            <Setter Property="Padding" Value="8,4" />
+                            <Setter Property="FontSize" Value="{DynamicResource FontSizeBody}" />
                         </Style>
                     </ListBox.Styles>
                     <!-- Headers -->
                     <Grid ColumnDefinitions="*, 80, 80, 120" Margin="8,4,8,8">
-                        <TextBlock Grid.Column="0" Text="NAME" Foreground="{DynamicResource MacTextMutedBrush}" FontSize="{DynamicResource FontSizeTiny}" FontWeight="Bold"/>
-                        <TextBlock Grid.Column="1" Text="EXT" Foreground="{DynamicResource MacTextMutedBrush}" FontSize="{DynamicResource FontSizeTiny}" FontWeight="Bold" TextAlignment="Right"/>
-                        <TextBlock Grid.Column="2" Text="SIZE" Foreground="{DynamicResource MacTextMutedBrush}" FontSize="{DynamicResource FontSizeTiny}" FontWeight="Bold" TextAlignment="Right"/>
-                        <TextBlock Grid.Column="3" Text="MODIFIED" Foreground="{DynamicResource MacTextMutedBrush}" FontSize="{DynamicResource FontSizeTiny}" FontWeight="Bold" TextAlignment="Right"/>
+                        <TextBlock Grid.Column="0" Text="NAME" Foreground="{DynamicResource MacTextMutedBrush}"
+                                   FontSize="{DynamicResource FontSizeTiny}" FontWeight="Bold" />
+                        <TextBlock Grid.Column="1" Text="EXT" Foreground="{DynamicResource MacTextMutedBrush}"
+                                   FontSize="{DynamicResource FontSizeTiny}" FontWeight="Bold" TextAlignment="Right" />
+                        <TextBlock Grid.Column="2" Text="SIZE" Foreground="{DynamicResource MacTextMutedBrush}"
+                                   FontSize="{DynamicResource FontSizeTiny}" FontWeight="Bold" TextAlignment="Right" />
+                        <TextBlock Grid.Column="3" Text="MODIFIED" Foreground="{DynamicResource MacTextMutedBrush}"
+                                   FontSize="{DynamicResource FontSizeTiny}" FontWeight="Bold" TextAlignment="Right" />
                     </Grid>
-                    
+
                     <Grid ColumnDefinitions="*, 80, 80, 120">
-                        <TextBlock Grid.Column="0" Text="📁 Deliverables_Clients"/>
-                        <TextBlock Grid.Column="1" Text="Folder" TextAlignment="Right" Foreground="{DynamicResource MacTextMutedBrush}"/>
-                        <TextBlock Grid.Column="2" Text="12 items" TextAlignment="Right" Foreground="{DynamicResource MacTextMutedBrush}"/>
-                        <TextBlock Grid.Column="3" Text="Sep 21 09:15" TextAlignment="Right" Foreground="{DynamicResource MacTextMutedBrush}"/>
+                        <TextBlock Grid.Column="0" Text="📁 Deliverables_Clients" />
+                        <TextBlock Grid.Column="1" Text="Folder" TextAlignment="Right"
+                                   Foreground="{DynamicResource MacTextMutedBrush}" />
+                        <TextBlock Grid.Column="2" Text="12 items" TextAlignment="Right"
+                                   Foreground="{DynamicResource MacTextMutedBrush}" />
+                        <TextBlock Grid.Column="3" Text="Sep 21 09:15" TextAlignment="Right"
+                                   Foreground="{DynamicResource MacTextMutedBrush}" />
                     </Grid>
                 </ListBox>
             </Grid>
 
             <!-- Splitter 2 -->
-            <GridSplitter Grid.Column="3" Background="{DynamicResource MacBorderBrush}" ResizeDirection="Columns"/>
+            <GridSplitter Grid.Column="3" Background="{DynamicResource MacBorderBrush}" ResizeDirection="Columns" />
 
             <!-- RIGHT INSPECTOR -->
             <Grid Grid.Column="4" Background="{DynamicResource MacSurfaceBrush}" RowDefinitions="Auto, 200, *">
-                
+
                 <!-- Inspector Header -->
-                <Border Grid.Row="0" Background="{DynamicResource MacSubsurfaceBrush}" BorderBrush="{DynamicResource MacBorderBrush}" BorderThickness="0,0,0,1" Padding="12,8">
-                    <TextBlock Text="🖼️ IMG_114801.JPG" FontWeight="SemiBold" FontSize="{DynamicResource FontSizeSmall}"/>
+                <Border Grid.Row="0" Background="{DynamicResource MacSubsurfaceBrush}"
+                        BorderBrush="{DynamicResource MacBorderBrush}" BorderThickness="0,0,0,1" Padding="12,8">
+                    <TextBlock Text="🖼️ IMG_114801.JPG" FontWeight="SemiBold"
+                               FontSize="{DynamicResource FontSizeSmall}" />
                 </Border>
-                
+
                 <!-- Image Preview Area -->
-                <Border Grid.Row="1" Background="#111111" BorderBrush="{DynamicResource MacBorderBrush}" BorderThickness="0,0,0,1">
-                    <TextBlock Text="[ High-Res Image Preview ]" Foreground="#555555" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Border Grid.Row="1" Background="#111111" BorderBrush="{DynamicResource MacBorderBrush}"
+                        BorderThickness="0,0,0,1">
+                    <TextBlock Text="[ High-Res Image Preview ]" Foreground="#555555" HorizontalAlignment="Center"
+                               VerticalAlignment="Center" />
                 </Border>
-                
+
                 <!-- Metadata Area -->
                 <StackPanel Grid.Row="2" Margin="12" Spacing="16">
                     <StackPanel Spacing="4">
-                        <TextBlock Text="EXIF METADATA" FontSize="{DynamicResource FontSizeTiny}" FontWeight="Bold" Foreground="{DynamicResource MacTextMutedBrush}"/>
-                        <Border Background="{DynamicResource MacWindowBackgroundBrush}" CornerRadius="{DynamicResource RadiusSmall}" BorderBrush="{DynamicResource MacBorderBrush}" BorderThickness="1" Padding="8">
+                        <TextBlock Text="EXIF METADATA" FontSize="{DynamicResource FontSizeTiny}" FontWeight="Bold"
+                                   Foreground="{DynamicResource MacTextMutedBrush}" />
+                        <Border Background="{DynamicResource MacWindowBackgroundBrush}"
+                                CornerRadius="{DynamicResource RadiusSmall}"
+                                BorderBrush="{DynamicResource MacBorderBrush}" BorderThickness="1" Padding="8">
                             <StackPanel Spacing="4">
-                                <TextBlock Text="Dimensions: 6240 × 4160" FontSize="{DynamicResource FontSizeSmall}"/>
-                                <TextBlock Text="26.0 Megapixels" FontSize="{DynamicResource FontSizeSmall}" Foreground="{DynamicResource MacAccentBrush}"/>
+                                <TextBlock Text="Dimensions: 6240 × 4160" FontSize="{DynamicResource FontSizeSmall}" />
+                                <TextBlock Text="26.0 Megapixels" FontSize="{DynamicResource FontSizeSmall}"
+                                           Foreground="{DynamicResource MacAccentBrush}" />
                             </StackPanel>
                         </Border>
-                        <Border Background="{DynamicResource MacWindowBackgroundBrush}" CornerRadius="{DynamicResource RadiusSmall}" BorderBrush="{DynamicResource MacBorderBrush}" BorderThickness="1" Padding="8">
+                        <Border Background="{DynamicResource MacWindowBackgroundBrush}"
+                                CornerRadius="{DynamicResource RadiusSmall}"
+                                BorderBrush="{DynamicResource MacBorderBrush}" BorderThickness="1" Padding="8">
                             <StackPanel Spacing="4">
-                                <TextBlock Text="Exposure: 1/3800s · f/3.6" FontSize="{DynamicResource FontSizeSmall}"/>
-                                <TextBlock Text="ISO: 400" FontSize="{DynamicResource FontSizeSmall}"/>
+                                <TextBlock Text="Exposure: 1/3800s · f/3.6" FontSize="{DynamicResource FontSizeSmall}" />
+                                <TextBlock Text="ISO: 400" FontSize="{DynamicResource FontSizeSmall}" />
                             </StackPanel>
                         </Border>
                     </StackPanel>
-                    
+
                     <StackPanel Spacing="4">
-                        <TextBlock Text="HARDWARE" FontSize="{DynamicResource FontSizeTiny}" FontWeight="Bold" Foreground="{DynamicResource MacTextMutedBrush}"/>
-                        <TextBlock Text="Camera: FUJIFILM X-T20" FontSize="{DynamicResource FontSizeSmall}"/>
-                        <TextBlock Text="Lens: XF 35mm f/1.4 R" FontSize="{DynamicResource FontSizeSmall}"/>
+                        <TextBlock Text="HARDWARE" FontSize="{DynamicResource FontSizeTiny}" FontWeight="Bold"
+                                   Foreground="{DynamicResource MacTextMutedBrush}" />
+                        <TextBlock Text="Camera: FUJIFILM X-T20" FontSize="{DynamicResource FontSizeSmall}" />
+                        <TextBlock Text="Lens: XF 35mm f/1.4 R" FontSize="{DynamicResource FontSizeSmall}" />
                     </StackPanel>
                 </StackPanel>
-                
+
             </Grid>
         </Grid>
 
         <!-- 4. BOTTOM STATUS BAR -->
-        <Border Grid.Row="3" Background="{DynamicResource MacSubsurfaceBrush}" BorderBrush="{DynamicResource MacBorderBrush}" BorderThickness="0,1,0,0" Padding="12,0">
+        <Border Grid.Row="3" Background="{DynamicResource MacSubsurfaceBrush}"
+                BorderBrush="{DynamicResource MacBorderBrush}" BorderThickness="0,1,0,0" Padding="12,0">
             <DockPanel VerticalAlignment="Center">
-                <TextBlock DockPanel.Dock="Left" Text="🟢 Selected: 1 file (8.4 MB)  |  Total: 474 items (789 MB)" Foreground="{DynamicResource MacTextMutedBrush}" FontSize="{DynamicResource FontSizeSmall}"/>
-                <TextBlock DockPanel.Dock="Right" Text="Ready" Foreground="{DynamicResource MacAccentBrush}" FontWeight="Medium" FontSize="{DynamicResource FontSizeSmall}"/>
-                <Panel/>
+                <TextBlock DockPanel.Dock="Left" Text="🟢 Selected: 1 file (8.4 MB)  |  Total: 474 items (789 MB)"
+                           Foreground="{DynamicResource MacTextMutedBrush}" FontSize="{DynamicResource FontSizeSmall}" />
+                <TextBlock DockPanel.Dock="Right" Text="Ready" Foreground="{DynamicResource MacAccentBrush}"
+                           FontWeight="Medium" FontSize="{DynamicResource FontSizeSmall}" />
+                <Panel />
             </DockPanel>
         </Border>
 
+        <!-- ============================================================
+         DROP AREA (staging shelf) + SHARING ACTIONS
+         ============================================================ -->
+        <Border Grid.Row="4" Classes="dropAreaBar">
+            <Grid ColumnDefinitions="Auto,*,Auto">
+
+                <Border Grid.Column="0" Classes="dropZone" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Spacing="7">
+                        <TextBlock Text="&#8679;" FontSize="13" Foreground="{DynamicResource AccentBrush}" />
+                        <TextBlock Text="Drop Area" Classes="body" FontWeight="Medium" />
+                        <Border Background="{DynamicResource AccentBrush}" CornerRadius="8" Padding="6,1">
+                            <TextBlock Text="3 queued" FontSize="10" FontWeight="Bold"
+                                       Foreground="{DynamicResource TextOnAccentBrush}" />
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="6"
+                            VerticalAlignment="Center" Margin="12,0">
+                    <Border Classes="stagedItemChip">
+                        <StackPanel Orientation="Horizontal" Spacing="5">
+                            <TextBlock Text="IMG_114801.JPG" Classes="secondary" FontSize="11" />
+                            <TextBlock Text="✕" Classes="secondary" FontSize="10" />
+                        </StackPanel>
+                    </Border>
+                    <Border Classes="stagedItemChip">
+                        <StackPanel Orientation="Horizontal" Spacing="5">
+                            <TextBlock Text="CLIP_0042.MOV" Classes="secondary" FontSize="11" />
+                            <TextBlock Text="✕" Classes="secondary" FontSize="10" />
+                        </StackPanel>
+                    </Border>
+                    <Border Classes="stagedItemChip">
+                        <StackPanel Orientation="Horizontal" Spacing="5">
+                            <TextBlock Text="DJI_0482.DNG" Classes="secondary" FontSize="11" />
+                            <TextBlock Text="✕" Classes="secondary" FontSize="10" />
+                        </StackPanel>
+                    </Border>
+                    <Button Background="Transparent" BorderThickness="0" Padding="4,2">
+                        <TextBlock Text="Clear" Classes="secondary" FontSize="11" />
+                    </Button>
+                </StackPanel>
+
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                    <TextBlock Text="Share:" Classes="secondary" FontSize="11" VerticalAlignment="Center"
+                               Margin="0,0,4,0" />
+                    <Button Classes="shareAction" Content="AirDrop" />
+                    <Button Classes="shareAction" Content="macOS Share" />
+                    <Button Classes="shareAction" Content="WhatsApp" />
+                    <Button Classes="shareAction" Content="Telegram" />
+                    <Button Classes="shareAction" Content="+" Padding="9,5" />
+                </StackPanel>
+            </Grid>
+        </Border>
+
         <!-- 5. COMMANDER BAR (F-KEYS) -->
-        <Border Grid.Row="4" Background="{DynamicResource MacWindowBackgroundBrush}" BorderBrush="{DynamicResource MacBorderBrush}" BorderThickness="0,1,0,0" Padding="2,2">
+        <Border Grid.Row="5" Background="{DynamicResource MacWindowBackgroundBrush}"
+                BorderBrush="{DynamicResource MacBorderBrush}" BorderThickness="0,1,0,0" Padding="2,2">
             <UniformGrid Columns="10">
                 <!-- F-Key Buttons mock -->
-                <Button Classes="FKey" Content="⌃Spc Select"/>
-                <Button Classes="FKey" Content="F2 Rename"/>
-                <Button Classes="FKey" Content="F3 View"/>
-                <Button Classes="FKey" Content="F4 Edit"/>
-                <Button Classes="FKey" Content="F5 Copy"/>
-                <Button Classes="FKey" Content="F6 Move"/>
-                <Button Classes="FKey" Content="F7 MkDir"/>
-                <Button Classes="FKey" Content="F8 Delete"/>
-                <Button Classes="FKey" Content="F9 Search"/>
-                <Button Classes="FKey" Content="⌘Q Quit"/>
+                <Button Classes="FKey" Content="⌃Spc Select" />
+                <Button Classes="FKey" Content="F2 Rename" />
+                <Button Classes="FKey" Content="F3 View" />
+                <Button Classes="FKey" Content="F4 Edit" />
+                <Button Classes="FKey" Content="F5 Copy" />
+                <Button Classes="FKey" Content="F6 Move" />
+                <Button Classes="FKey" Content="F7 MkDir" />
+                <Button Classes="FKey" Content="F8 Delete" />
+                <Button Classes="FKey" Content="F9 Search" />
+                <Button Classes="FKey" Content="⌘Q Quit" />
             </UniformGrid>
         </Border>
 
