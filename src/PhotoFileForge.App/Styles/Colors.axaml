@@ -2,14 +2,25 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!-- Accent colors (shared across themes) -->
-    <Color x:Key="MacAccentColor">#9CCC65</Color>
-    <Color x:Key="MacAccentHoverColor">#AED581</Color>
-    <SolidColorBrush x:Key="MacAccentBrush" Color="{StaticResource MacAccentColor}"/>
-    <SolidColorBrush x:Key="MacAccentHoverBrush" Color="{StaticResource MacAccentHoverColor}"/>
-    <SolidColorBrush x:Key="MacAccentTransparentBrush" Color="#209CCC65"/> <!-- For selection highlighting (transparent) -->
-
+    <Color x:Key="AccentColor">#9CCC65</Color>
+    <Color x:Key="AccentHoverColor">#A9C98A</Color>
+    <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}"/>
+    <SolidColorBrush x:Key="AccentHoverBrush" Color="{StaticResource AccentHoverColor}"/>
+    <SolidColorBrush x:Key="AccentTransparentBrush" Color="#209CCC65"/> <!-- For selection highlighting (transparent) -->
+    <!-- Accent -->
+    <Color x:Key="AccentColorMuted">#5E7A45</Color>
+    <Color x:Key="AccentColorSubtleBg">#264A2A</Color>
+    <SolidColorBrush x:Key="AccentMutedBrush" Color="{DynamicResource AccentColorMuted}" />
+    <SolidColorBrush x:Key="AccentSubtleBgBrush" Color="{DynamicResource AccentColorSubtleBg}" Opacity="0.35" />
+    
+    <!-- Semantic tags -->
+    <Color x:Key="TagRawColor">#E0B34D</Color>
+    <Color x:Key="TagJpgColor">#5B9FE3</Color>
+    <Color x:Key="TagVideoColor">#C97BDB</Color>
+    <Color x:Key="TagDocColor">#8A9199</Color>
+    <Color x:Key="TagFolderColor">#6BB3E8</Color>
+    
     <ResourceDictionary.ThemeDictionaries>
-        
         <!-- LIGHT THEME -->
         <ResourceDictionary x:Key="Light">
             <SolidColorBrush x:Key="MacWindowBackgroundBrush">#ECECEC</SolidColorBrush>
@@ -36,6 +47,79 @@
             <SolidColorBrush x:Key="MacTextMutedBrush">#98989D</SolidColorBrush>
 
             <SolidColorBrush x:Key="MacHoverBrush">#1AFFFFFF</SolidColorBrush>
+            
+            <!-- TODO Refectore this -->
+            <!-- Surfaces -->
+      <Color x:Key="WindowBackgroundColor">#FFFFFF</Color>
+      <Color x:Key="ToolbarBackgroundColor">#F6F6F7</Color>
+      <Color x:Key="SidebarBackgroundColor">#F5F5F7</Color>
+      <Color x:Key="PaneBackgroundColor">#FFFFFF</Color>
+      <Color x:Key="PaneHeaderBackgroundColor">#F6F6F7</Color>
+      <Color x:Key="ListHeaderBackgroundColor">#F1F1F3</Color>
+      <Color x:Key="RowAltBackgroundColor">#F8F8F9</Color>
+      <Color x:Key="RowHoverBackgroundColor">#ECECEE</Color>
+      <Color x:Key="RowSelectedBackgroundColor">#DCEFC8</Color>
+      <Color x:Key="RowSelectedInactiveBackgroundColor">#E9EBE4</Color>
+      <Color x:Key="SidebarChipBackgroundColor">#EAEAEC</Color>
+      <Color x:Key="SidebarChipActiveBackgroundColor">#DCEFC8</Color>
+      <Color x:Key="StatusBarBackgroundColor">#F6F6F7</Color>
+      <Color x:Key="FooterBackgroundColor">#F6F6F7</Color>
+      <Color x:Key="DropAreaBackgroundColor">#F0F7E9</Color>
+      <Color x:Key="SidebarPanelBackgroundColor">#FBFBFC</Color>
+      <Color x:Key="CardBackgroundColor">#FFFFFF</Color>
+      <Color x:Key="InputBackgroundColor">#FFFFFF</Color>
+
+      <!-- Text -->
+      <Color x:Key="TextPrimaryColor">#1D1D1F</Color>
+      <Color x:Key="TextSecondaryColor">#6E6E73</Color>
+      <Color x:Key="TextTertiaryColor">#9A9AA0</Color>
+      <Color x:Key="TextOnAccentColor">#FFFFFF</Color>
+      <Color x:Key="TextDisabledColor">#B7B7BC</Color>
+            
+
+      <!-- Semantic tags -->
+      <Color x:Key="TagRawColor">#B8860B</Color>
+      <Color x:Key="TagJpgColor">#2E75D6</Color>
+      <Color x:Key="TagVideoColor">#9A4DB8</Color>
+      <Color x:Key="TagDocColor">#6E6E73</Color>
+      <Color x:Key="TagFolderColor">#2E86D6</Color>
+
+      <SolidColorBrush x:Key="WindowBackgroundBrush" Color="{DynamicResource WindowBackgroundColor}" />
+      <SolidColorBrush x:Key="ToolbarBackgroundBrush" Color="{DynamicResource ToolbarBackgroundColor}" />
+      <SolidColorBrush x:Key="SidebarBackgroundBrush" Color="{DynamicResource SidebarBackgroundColor}" />
+      <SolidColorBrush x:Key="PaneBackgroundBrush" Color="{DynamicResource PaneBackgroundColor}" />
+      <SolidColorBrush x:Key="PaneHeaderBackgroundBrush" Color="{DynamicResource PaneHeaderBackgroundColor}" />
+      <SolidColorBrush x:Key="ListHeaderBackgroundBrush" Color="{DynamicResource ListHeaderBackgroundColor}" />
+      <SolidColorBrush x:Key="RowAltBackgroundBrush" Color="{DynamicResource RowAltBackgroundColor}" />
+      <SolidColorBrush x:Key="RowHoverBackgroundBrush" Color="{DynamicResource RowHoverBackgroundColor}" />
+      <SolidColorBrush x:Key="RowSelectedBackgroundBrush" Color="{DynamicResource RowSelectedBackgroundColor}" />
+      <SolidColorBrush x:Key="RowSelectedInactiveBackgroundBrush" Color="{DynamicResource RowSelectedInactiveBackgroundColor}" />
+      <SolidColorBrush x:Key="SidebarChipBackgroundBrush" Color="{DynamicResource SidebarChipBackgroundColor}" />
+      <SolidColorBrush x:Key="SidebarChipActiveBackgroundBrush" Color="{DynamicResource SidebarChipActiveBackgroundColor}" />
+      <SolidColorBrush x:Key="StatusBarBackgroundBrush" Color="{DynamicResource StatusBarBackgroundColor}" />
+      <SolidColorBrush x:Key="FooterBackgroundBrush" Color="{DynamicResource FooterBackgroundColor}" />
+      <SolidColorBrush x:Key="DropAreaBackgroundBrush" Color="{DynamicResource DropAreaBackgroundColor}" />
+      <SolidColorBrush x:Key="SidebarPanelBackgroundBrush" Color="{DynamicResource SidebarPanelBackgroundColor}" />
+      <SolidColorBrush x:Key="CardBackgroundBrush" Color="{DynamicResource CardBackgroundColor}" />
+      <SolidColorBrush x:Key="InputBackgroundBrush" Color="{DynamicResource InputBackgroundColor}" />
+
+      <SolidColorBrush x:Key="TextPrimaryBrush" Color="{DynamicResource TextPrimaryColor}" />
+      <SolidColorBrush x:Key="TextSecondaryBrush" Color="{DynamicResource TextSecondaryColor}" />
+      <SolidColorBrush x:Key="TextTertiaryBrush" Color="{DynamicResource TextTertiaryColor}" />
+      <SolidColorBrush x:Key="TextOnAccentBrush" Color="{DynamicResource TextOnAccentColor}" />
+      <SolidColorBrush x:Key="TextDisabledBrush" Color="{DynamicResource TextDisabledColor}" />
+
+      <SolidColorBrush x:Key="SeparatorBrush" Color="{DynamicResource SeparatorColor}" />
+      <SolidColorBrush x:Key="SeparatorStrongBrush" Color="{DynamicResource SeparatorStrongColor}" />
+      <SolidColorBrush x:Key="ActivePaneBorderBrush" Color="{DynamicResource ActivePaneBorderColor}" />
+      <SolidColorBrush x:Key="InactivePaneBorderBrush" Color="{DynamicResource InactivePaneBorderColor}" />
+
+      <SolidColorBrush x:Key="TagRawBrush" Color="{DynamicResource TagRawColor}" />
+      <SolidColorBrush x:Key="TagJpgBrush" Color="{DynamicResource TagJpgColor}" />
+      <SolidColorBrush x:Key="TagVideoBrush" Color="{DynamicResource TagVideoColor}" />
+      <SolidColorBrush x:Key="TagDocBrush" Color="{DynamicResource TagDocColor}" />
+      <SolidColorBrush x:Key="TagFolderBrush" Color="{DynamicResource TagFolderColor}" />
+            
         </ResourceDictionary>
         
     </ResourceDictionary.ThemeDictionaries>

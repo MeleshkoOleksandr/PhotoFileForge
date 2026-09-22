@@ -21,5 +21,6 @@
     <Application.Styles>
         <FluentTheme />
         <StyleInclude Source="avares://PhotoFileForge.App/Styles/ButtonStyles.axaml" />
+        <StyleInclude Source="avares://PhotoFileForge.App/Styles/Controls.axaml" />
     </Application.Styles>
 </Application>
